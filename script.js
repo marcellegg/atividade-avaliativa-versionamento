@@ -1,15 +1,57 @@
 // ---------- Tela de Login (index.html) ----------
 const loginForm = document.getElementById("loginForm");
 
+const loginForm = document.getElementById("loginForm");
+
 if (loginForm) {
-  const usuario = document.getElementById("usuario");
-  const senha = document.getElementById("senha");
+  const usuarioInput = document.getElementById("usuario");
+  const senhaInput = document.getElementById("senha");
   const mensagem = document.getElementById("mensagem");
 
-  function buscarUsuarioCadastrado(email) {
+  function buscarEValidarUsuario(loginInformado, senhaInformada) {
     const usuarios = JSON.parse(localStorage.getItem("usuariosCadastrados") || "[]");
-    return usuarios.find((u) => u.email.toLowerCase() === email.toLowerCase());
+    return usuarios.find(
+      (u) =>
+        (u.email.toLowerCase() === loginInformado.toLowerCase() ||
+         u.nome.toLowerCase() === loginInformado.toLowerCase()) &&
+        u.senha === senhaInformada
+    );
   }
+
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const usuarioInformado = usuarioInput.value.trim();
+    const senhaInformada = senhaInput.value;
+
+    if (usuarioInformado === "" || senhaInformada === "") {
+      mensagem.style.color = "#ff5252";
+      mensagem.textContent = "Preencha todos os campos!";
+      return;
+    }
+
+    const usuarioValido = buscarEValidarUsuario(usuarioInformado, senhaInformada);
+
+    if (usuarioValido) {
+      localStorage.setItem("usuarioLogado", JSON.stringify({ nome: usuarioValido.nome }));
+      localStorage.setItem("ultimoAcesso", new Date().toLocaleString("pt-BR"));
+      
+      mensagem.style.color = "#03dac6";
+      mensagem.textContent = "Login realizado com sucesso!";
+      setTimeout(() => { window.location.href = "dashboard.html"; }, 800);
+    } else if (usuarioInformado === "adm" && senhaInformada === "123") {
+      localStorage.setItem("usuarioLogado", JSON.stringify({ nome: "Administrador" }));
+      localStorage.setItem("ultimoAcesso", new Date().toLocaleString("pt-BR"));
+      
+      mensagem.style.color = "#03dac6";
+      mensagem.textContent = "Login realizado com sucesso!";
+      setTimeout(() => { window.location.href = "dashboard.html"; }, 800);
+    } else {
+      mensagem.style.color = "#ff5252";
+      mensagem.textContent = "Usuário ou senha incorretos.";
+    }
+  });
+}
 
   loginForm.addEventListener("submit", (e) => {
     e.preventDefault(); // evita o recarregamento da página
