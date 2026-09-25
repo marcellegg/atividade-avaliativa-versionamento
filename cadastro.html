@@ -276,7 +276,7 @@
       btnSubmit.textContent = "Cadastrando...";
  
       setTimeout(() => {
-        salvarUsuario({ nome, email });
+        salvarUsuario({ nome, email, senha });
         localStorage.setItem("usuarioLogado", JSON.stringify({ nome }));
         localStorage.setItem("ultimoAcesso", new Date().toLocaleString("pt-BR"));
  
