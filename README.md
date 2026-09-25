@@ -1,5 +1,4 @@
 
-Readme · MD
 # Atividade Avaliativa — Versionamento
  
 Projeto front-end simples desenvolvido como atividade avaliativa sobre versionamento (Git/GitHub), simulando um pequeno sistema de autenticação com telas de **login**, **cadastro de usuário** e **dashboard**.
