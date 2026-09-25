@@ -1,218 +1,147 @@
+/* =========================================================
+   1. RESET E CONFIGURAÇÕES GERAIS
+   ========================================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-font-family: Arial, sans-serif;
-background-color: #121212;
-color: #fff;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Tema escuro obrigatório */
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
 }
-.login-container {
-background-color: #1f1f1f;
-padding: 30px;
-border-radius: 10px;
-box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-width: 300px;
+
+/* =========================================================
+   2. CARD/CONTAINER PRINCIPAL (Login e Cadastro)
+   ========================================================= */
+.login-container, .card {
+    background-color: #1f1f1f;
+    padding: 35px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
 }
-.login-container input {
-width: 100%;
-margin: 10px 0;
-padding: 10px;
-border: none;
-border-radius: 5px;
+
+/* Títulos */
+h1 {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
 }
-button {
-width: 100%;
-padding: 10px;
-background-color: #03dac6;
-color: #000;
-border: none;
-border-radius: 5px;
-font-weight: bold;
-cursor: pointer;
+
+p.subtitle {
+    font-size: 13px;
+    color: #a0a0a0;
+    margin-bottom: 20px;
 }
-button:hover {
-background-color: #00bfa5;
+
+/* =========================================================
+   3. FORMULÁRIOS E INPUTS
+   ========================================================= */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
+
+.field {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 4px;
+}
+
+.field label {
+    font-size: 12px;
+    color: #cccccc;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 14px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #00bfa5;
+}
+
+/* =========================================================
+   4. BOTÕES
+   ========================================================= */
+button, .btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: #00bfa5 !important; /* Cor ciano idêntica à imagem */
+    color: #000000 !important;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 10px;
+}
+
+button:hover, .btn-submit:hover {
+    background-color: #008f7a !important;
+}
+
+/* =========================================================
+   5. MENSAGENS DE ERRO E SUCESSO
+   ========================================================= */
+#mensagem, .status-msg, .error-msg {
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: bold;
+    min-height: 16px;
+}
+
 #mensagem {
-margin-top: 10px;
-color: #ff5252;
-font-weight: bold;
-}
-.cadastro-link {
-margin-top: 16px;
-text-align: center;
-font-size: 0.85rem;
-color: #b3b3b3;
-}
-.cadastro-link a {
-color: #03dac6;
-font-weight: bold;
-text-decoration: none;
-}
-.cadastro-link a:hover {
-text-decoration: underline;
-}
-:root {
-  --bg: #f4f5f7;
-  --sidebar-bg: #1f2937;
-  --sidebar-text: #e5e7eb;
-  --sidebar-active: #374151;
-  --accent: #3b82f6;
-  --card-bg: #ffffff;
-  --text-main: #111827;
-  --text-muted: #6b7280;
-  --border: #e5e7eb;
+    color: #ff5252; /* Cor padrão de erro */
 }
 
-* { 
-  box-sizing: border-box; 
+.error-msg {
+    color: #ff5252;
+    font-size: 11px;
 }
 
-body {
-  margin: 0;
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text-main);
-  display: flex;
-  min-height: 100vh;
+/* =========================================================
+   6. LINKS DE NAVEGAÇÃO ("Cadastre-se" / "Entrar")
+   ========================================================= */
+.link-cadastro, .login-link {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #b0b0b0 !important;
 }
 
-/* Sidebar */
-.sidebar {
-  width: 240px;
-  background: var(--sidebar-bg);
-  color: var(--sidebar-text);
-  display: flex;
-  flex-direction: column;
-  padding: 24px 0;
-  flex-shrink: 0;
+/* Garante que o link sobressaia o azul padrão do navegador */
+.link-cadastro a, 
+.login-link a, 
+a {
+    color: #00bfa5 !important;
+    text-decoration: none !important;
+    font-weight: bold;
 }
 
-.sidebar .logo {
-  font-size: 1.3rem;
-  font-weight: 700;
-  padding: 0 24px 24px 24px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  margin-bottom: 16px;
-}
-
-.sidebar nav {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.sidebar nav a {
-  color: var(--sidebar-text);
-  text-decoration: none;
-  padding: 12px 24px;
-  font-size: 0.95rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: background 0.15s ease;
-}
-
-.sidebar nav a:hover {
-  background: var(--sidebar-active);
-}
-
-.sidebar nav a.active {
-  background: var(--accent);
-  color: #fff;
-  font-weight: 600;
-}
-
-.sidebar .logout {
-  margin-top: auto;
-  padding: 12px 24px;
-}
-
-.sidebar .logout button {
-  width: 100%;
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.25);
-  color: var(--sidebar-text);
-  padding: 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-.sidebar .logout button:hover {
-  background: rgba(255,255,255,0.1);
-}
-
-/* Main Content */
-.main {
-  flex: 1;
-  padding: 32px 40px;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 32px;
-}
-
-.welcome h1 {
-  margin: 0 0 4px 0;
-  font-size: 1.6rem;
-}
-
-.welcome p {
-  margin: 0;
-  color: var(--text-muted);
-}
-
-.user-badge {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  padding: 8px 16px;
-  border-radius: 999px;
-}
-
-.user-badge .avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 0.85rem;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-}
-
-.card {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 20px;
-}
-
-.card h3 {
-  margin: 0 0 8px 0;
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-}
-
-.card .value {
-  font-size: 1.8rem;
-  font-weight: 700;
+.link-cadastro a:hover, 
+.login-link a:hover, 
+a:hover {
+    text-decoration: underline !important;
 }
