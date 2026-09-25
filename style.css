@@ -39,6 +39,20 @@ margin-top: 10px;
 color: #ff5252;
 font-weight: bold;
 }
+.cadastro-link {
+margin-top: 16px;
+text-align: center;
+font-size: 0.85rem;
+color: #b3b3b3;
+}
+.cadastro-link a {
+color: #03dac6;
+font-weight: bold;
+text-decoration: none;
+}
+.cadastro-link a:hover {
+text-decoration: underline;
+}
 :root {
   --bg: #f4f5f7;
   --sidebar-bg: #1f2937;
