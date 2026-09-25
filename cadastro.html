@@ -1,0 +1,295 @@
+adastro usuario · HTML
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastro de Usuário</title>
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --accent: #3b82f6;
+    --accent-hover: #2563eb;
+    --card-bg: #ffffff;
+    --text-main: #111827;
+    --text-muted: #6b7280;
+    --border: #d1d5db;
+    --error: #dc2626;
+    --success: #16a34a;
+  }
+ 
+  * { box-sizing: border-box; }
+ 
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+ 
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 36px 32px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+ 
+  .card h1 {
+    margin: 0 0 4px 0;
+    font-size: 1.4rem;
+  }
+ 
+  .card p.subtitle {
+    margin: 0 0 24px 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+ 
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+ 
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+ 
+  .field label {
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+ 
+  .field input {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+ 
+  .field input:focus {
+    border-color: var(--accent);
+  }
+ 
+  .field input.invalid {
+    border-color: var(--error);
+  }
+ 
+  .field .error-msg {
+    font-size: 0.78rem;
+    color: var(--error);
+    min-height: 14px;
+  }
+ 
+  .btn-submit {
+    margin-top: 8px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+ 
+  .btn-submit:hover {
+    background: var(--accent-hover);
+  }
+ 
+  .btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+ 
+  .status-msg {
+    margin-top: 14px;
+    font-size: 0.88rem;
+    text-align: center;
+    display: none;
+  }
+ 
+  .status-msg.success {
+    color: var(--success);
+    display: block;
+  }
+ 
+  .status-msg.error {
+    color: var(--error);
+    display: block;
+  }
+ 
+  .login-link {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+ 
+  .login-link a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+ 
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+ 
+  <div class="card">
+    <h1>Criar conta</h1>
+    <p class="subtitle">Preencha os dados abaixo para se cadastrar.</p>
+ 
+    <form id="cadastroForm" novalidate>
+      <div class="field">
+        <label for="nome">Nome completo</label>
+        <input type="text" id="nome" name="nome" placeholder="Seu nome" autocomplete="name">
+        <span class="error-msg" id="erroNome"></span>
+      </div>
+ 
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="seu@email.com" autocomplete="email">
+        <span class="error-msg" id="erroEmail"></span>
+      </div>
+ 
+      <div class="field">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+        <span class="error-msg" id="erroSenha"></span>
+      </div>
+ 
+      <div class="field">
+        <label for="confirmarSenha">Confirmar senha</label>
+        <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Repita a senha" autocomplete="new-password">
+        <span class="error-msg" id="erroConfirmarSenha"></span>
+      </div>
+ 
+      <button type="submit" class="btn-submit" id="btnSubmit">Cadastrar</button>
+ 
+      <div class="status-msg" id="statusMsg"></div>
+    </form>
+ 
+    <div class="login-link">
+      Já tem uma conta? <a href="index.html">Entrar</a>
+    </div>
+  </div>
+ 
+  <script>
+    const form = document.getElementById("cadastroForm");
+    const statusMsg = document.getElementById("statusMsg");
+    const btnSubmit = document.getElementById("btnSubmit");
+ 
+    const campos = {
+      nome: document.getElementById("nome"),
+      email: document.getElementById("email"),
+      senha: document.getElementById("senha"),
+      confirmarSenha: document.getElementById("confirmarSenha"),
+    };
+ 
+    function limparErro(campo) {
+      campo.classList.remove("invalid");
+      document.getElementById("erro" + capitalize(campo.name)).textContent = "";
+    }
+ 
+    function mostrarErro(campo, mensagem) {
+      campo.classList.add("invalid");
+      document.getElementById("erro" + capitalize(campo.name)).textContent = mensagem;
+    }
+ 
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+ 
+    function validarEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+ 
+    function usuarioJaExiste(email) {
+      const usuarios = JSON.parse(localStorage.getItem("usuariosCadastrados") || "[]");
+      return usuarios.some(u => u.email.toLowerCase() === email.toLowerCase());
+    }
+ 
+    function salvarUsuario(usuario) {
+      const usuarios = JSON.parse(localStorage.getItem("usuariosCadastrados") || "[]");
+      usuarios.push(usuario);
+      localStorage.setItem("usuariosCadastrados", JSON.stringify(usuarios));
+    }
+ 
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+ 
+      Object.values(campos).forEach(limparErro);
+      statusMsg.className = "status-msg";
+      statusMsg.textContent = "";
+ 
+      let valido = true;
+ 
+      const nome = campos.nome.value.trim();
+      const email = campos.email.value.trim();
+      const senha = campos.senha.value;
+      const confirmarSenha = campos.confirmarSenha.value;
+ 
+      if (nome.length < 3) {
+        mostrarErro(campos.nome, "Informe seu nome completo.");
+        valido = false;
+      }
+ 
+      if (!validarEmail(email)) {
+        mostrarErro(campos.email, "Informe um e-mail válido.");
+        valido = false;
+      } else if (usuarioJaExiste(email)) {
+        mostrarErro(campos.email, "Este e-mail já está cadastrado.");
+        valido = false;
+      }
+ 
+      if (senha.length < 6) {
+        mostrarErro(campos.senha, "A senha deve ter ao menos 6 caracteres.");
+        valido = false;
+      }
+ 
+      if (confirmarSenha !== senha || confirmarSenha === "") {
+        mostrarErro(campos.confirmarSenha, "As senhas não coincidem.");
+        valido = false;
+      }
+ 
+      if (!valido) return;
+ 
+      // Simulação de cadastro local.
+      // Troque por uma chamada real à API/backend quando integrar.
+      btnSubmit.disabled = true;
+      btnSubmit.textContent = "Cadastrando...";
+ 
+      setTimeout(() => {
+        salvarUsuario({ nome, email });
+        localStorage.setItem("usuarioLogado", JSON.stringify({ nome }));
+        localStorage.setItem("ultimoAcesso", new Date().toLocaleString("pt-BR"));
+ 
+        statusMsg.classList.add("success");
+        statusMsg.textContent = "Cadastro realizado com sucesso! Redirecionando...";
+ 
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 1200);
+      }, 600);
+    });
+  </script>
+ 
+</body>
+</html>
